@@ -58,6 +58,8 @@ galaxy_info:
 dependencies: 
   - role: user
     vars:
-      groupe_name: "{{tomcat_
-      user_name: tomcat 
+      groupe_name: "{{tomcat_groupe_name_default}}"
+      user_name: "{{tomcat_user_name_default}}"
+      uid: "{{tomcat_uid_default}}"
+      gid: "{{tomcat_gid_default}}"
   - role: java   

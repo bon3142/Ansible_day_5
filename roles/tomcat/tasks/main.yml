@@ -2,37 +2,37 @@
 # tasks file for tomcat
 - name: new groupe
   group:
-    name: jenkins
+    name: "{{groupe_name}}"
     state: present
   
 
-- name: new users creation jenkins
+- name: new users creation {{user_name}}
   user:
-    name: jenkins
-    password: "{{ 'jenkins' | password_hash('sha512') }}"
+    name: "{{user_name}}"
+    password: "{{ user_name | password_hash('sha512') }}"
     
       
 - name: create folder
   file:
     path: /opt/tom
     state: directory
-    owner: jenkins
-    group: jenkins
+    owner: "{{user_name}}"
+    group: "{{groupe_name}}"
     mode: 0775
 
 - name: install 
   get_url:
     url: http://ftp.byfly.by/pub/apache.org/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz
     dest: /opt/tom
-    owner: jenkins
-    group: jenkins
+    owner: "{{user_name}}"
+    group: "{{groupe_name}}"
 - name: extract 
   unarchive:
     remote_src: yes
     src: /opt/tom/apache-tomcat-8.5.39.tar.gz
     dest: /opt/tom
-    owner: jenkins
-    group: jenkins
+    owner: "{{user_name}}"
+    group: "{{groupe_name}}"
 - file:
     path: /
 - name: copy systemd
@@ -44,15 +44,15 @@
   copy:
     src: tomcat-users.xml
     dest: /opt/tom/apache-tomcat-8.5.39/conf
-    owner: jenkins
-    group: jenkins
+    owner: "{{user_name}}"
+    group: "{{groupe_name}}"
 
 - name: create webapps backup
   file:
     path: /opt/tom/apache-tomcat-8.5.39/OLDwebapps
     state: directory
-    owner: jenkins
-    group: jenkins
+    owner: "{{user_name}}"
+    group: "{{groupe_name}}"
   become: yes
 - name: start tomcat
   systemd:

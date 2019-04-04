@@ -17,3 +17,8 @@
   become: yes  
   roles:
   - tomcat  
+  
+- hosts: deploy
+  become: yes 
+  roles:
+  - Deploy_to_Tomcat  

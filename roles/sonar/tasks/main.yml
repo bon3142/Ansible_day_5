@@ -6,7 +6,7 @@
 
 - debug: msg="{{sonar_service.stat.exists}}"
   when: sonar_service.stat.exists == false
-  tags: never
+  
 
 - import_tasks: set_sonar.yml
   when: sonar_service.stat.exists == false

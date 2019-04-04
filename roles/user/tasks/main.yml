@@ -19,12 +19,12 @@
  #   - { user_name: 'sonar', uid: '8800', gid: '8800'}
  #   - { user_name: 'nexus', uid: '7700', gid: '7700'}
  #   - { user_name: 'tomcat', uid: '9900', gid: '9900'}
-- name: Add  user  to sodoers  
+- name: Add  user  to sudoers  
   lineinfile:
     dest: /etc/sudoers
     state: present
     line: "{{ user_name }} ALL=(ALL) NOPASSWD: ALL"
     validate: 'visudo -cf %s'
   become: yes
-  when: "{{user_sudoers}}" != ''
+  when: user_sudoers != ''
  

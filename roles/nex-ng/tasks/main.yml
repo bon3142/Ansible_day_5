@@ -6,7 +6,7 @@
 
 - debug: msg="{{nexus_service.stat.exists}}"
   when: nexus_service.stat.exists == false
-  tags: never
+  
 
 - import_tasks: set_nexus.yml
   when: nexus_service.stat.exists == false

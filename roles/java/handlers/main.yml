@@ -8,14 +8,14 @@
   
 - name: get java version
   shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/[^0-9._]//g'
-  register: java_version
-  listen: collect_facts
+  register: jv_version
+  listen: colect_facts
 
 - name: save_facts
   copy:
     content: >
      {
-      "java": "{{ java_version.stdout }}"
+      "java": "{{ jv_version.stdout }}"
      }
     dest: "/etc/ansible/facts.d/packages.fact"
     owner: vagrant

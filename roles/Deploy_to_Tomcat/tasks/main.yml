@@ -1,0 +1,17 @@
+- name: Download artifact from Nexus
+  get_url:
+    url: "http://nexus-ci.playpit.by/repository/MNT-pipeline-training/ydzmitryieu/pipeline-ydzmitryieu/58/pipeline-ydzmitryieu-58.tar.gz"
+    dest: tmp/
+
+- name: Unarchive the artifact 
+  unarchive:
+    remote_src: yes
+    src: "tmp/pipeline-ydzmitryieu/58/pipeline-ydzmitryieu-58.tar.gz"
+    dest: "tmp/version_new"
+
+- name: untar artifact
+  shell: "tar -xzf tmp/pipeline-ydzmitryieu/58/pipeline-ydzmitryieu-58.tar.gz"
+  
+- name: Deploying artifact
+  shell: |
+    curl -T 'tmp/version_new/helloworld-ws/target/helloworld-ws.war' 'http://tomcat:tomcat@192.168.56.5/manager/text/deploy?path=/helloworld-ws-ydzmitryieu&update=true'

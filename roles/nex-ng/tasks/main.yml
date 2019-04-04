@@ -1,35 +1,12 @@
----
-# tasks file for nex-ng
-
-- name: unzip
-  yum:
-    name: unzip
-- name: create folder nexus
-  file:
+- name: set nexus
+  stat:
     path: /opt/nexus
-    state: directory 
-    owner: "{{user_name}}"
-    group: "{{groupe_name}}"
-- name: wget nexus
-  get_url:
-    url: https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.0.2-02-unix.tar.gz
-    dest: /opt/nexus
-    owner: "{{user_name}}"
-    group: "{{groupe_name}}"
-- name: Extract
-  unarchive:
-    remote_src: yes
-    src: /opt/nexus/nexus-3.0.2-02-unix.tar.gz
-    dest: /opt/nexus
-    owner: "{{user_name}}"
-    group: "{{groupe_name}}"
-- name: copy
-  copy:
-    src: nexus.service
-    dest: /etc/systemd/system
+  register: nexus_service
 
-- name: start nexus
-  systemd:
-    name: nexus.service
-    enabled: true
-    state: started 
+
+- debug: msg="{{nexus_service.stat.exists}}"
+  when: nexus_service.stat.exists == false
+  tags: never
+
+- import_tasks: set_nexus.yml
+  when: nexus_service.stat.exists == false

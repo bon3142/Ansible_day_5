@@ -1,0 +1,24 @@
+- name: check facts.d
+  file:
+    path: "/etc/ansible/facts.d/"
+    state: directory
+    owner: vagrant
+    group: vagrant
+  listen: colect_facts
+  
+- name: get java version
+  shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/[^0-9._]//g'
+  register: java_version
+  listen: collect_facts
+
+- name: save_facts
+  copy:
+    content: >
+     {
+      "java": "{{ java_version.stdout }}"
+     }
+    dest: "/etc/ansible/facts.d/packages.fact"
+    owner: vagrant
+    group: vagrant
+  listen: colect_facts
+  

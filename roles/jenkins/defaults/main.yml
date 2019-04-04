@@ -1,0 +1,8 @@
+---
+# defaults file for jenkins
+
+favcolor: blue
+jenkins_groupe_name_default: jenkins
+jenkins_user_name_default: jenkins
+jenkins_uid_default: 5500
+jenkins_gid_default: 5500

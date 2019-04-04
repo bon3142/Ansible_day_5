@@ -1,0 +1,22 @@
+---
+# tasks file for user
+- name: Create groups
+  group:
+    name: "{{ groupe_name }}"
+    state: present
+    gid: "{{ gid }}"
+  
+
+- name: Create users
+  user:
+    name: "{{ user_name }}"
+    state: present
+    password: "{{  user_name  | password_hash('sha512') }}"
+    uid: "{{ uid }}"
+    groups: "{{ gid }}"
+ # loop:
+ #   - { user_name: 'jenkins', uid: '5500', gid: '5500'}
+ #   - { user_name: 'sonar', uid: '8800', gid: '8800'}
+ #   - { user_name: 'nexus', uid: '7700', gid: '7700'}
+ #   - { user_name: 'tomcat', uid: '9900', gid: '9900'}
+    

@@ -1,0 +1,19 @@
+---  
+- hosts: master3
+  become: yes
+  roles:
+  - jenkins
+  
+- hosts: Slave1
+  become: yes
+  roles:
+  - sonar
+- hosts: Slave2
+  become: yes
+  roles:
+  - nex-ng
+  
+- hosts: tomcat
+  become: yes  
+  roles:
+  - tomcat  

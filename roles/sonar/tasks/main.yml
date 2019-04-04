@@ -1,0 +1,65 @@
+---
+# tasks file for sonar
+- name: unzip
+  yum:
+    name: unzip
+
+- name: create folder "{{user_name}}"
+  file:
+    path: /opt/sonar
+    state: directory 
+    owner: "{{user_name}}"
+    group: "{{groupe_name}}"
+
+- name: install the latest version of postgresql-server
+  yum:
+    name: postgresql-server
+    state: latest
+
+- name: install the latest version of postgresql-contrib
+  yum:
+    name: postgresql-contrib
+    state: latest 
+
+- name: initdb
+  command: postgresql-setup initdb creates=/var/lib/pgsql/data/pg_hba.conf  
+
+- name: enable and start the PostgreSQL server
+  service: name=postgresql enabled=yes state=started
+
+- name: creat user and so on
+  shell: | 
+    psql -c "create user sonar"
+    psql -c "alter role sonar with creatdb"
+    psql -c "alter user sonar with encrypted password 'sonar'"
+    psql -c "create database sonar owner sonar"
+    psql -c "grant all privileges on database sonar to sonar"
+  become: true
+  become_user: postgres 
+
+- name: restart postgresql
+  service:
+    name: postgresql
+    state: restarted 
+
+- name: wget sonar
+  get_url:
+    url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.6.zip
+    dest: /opt/sonar
+    owner: "{{user_name}}"
+    group: "{{groupe_name}}"
+    
+- name: Extract
+  unarchive:
+    remote_src: yes
+    src: /opt/sonar/sonarqube-7.6.zip
+    dest: /opt/sonar
+    owner: "{{user_name}}"
+    group: "{{groupe_name}}"
+
+- name: 
+  shell:
+    /opt/sonar/sonarqube-7.6/bin/linux-x86-64/sonar.sh start
+  become: true
+  become_user: "{{user_name}}"       
+       

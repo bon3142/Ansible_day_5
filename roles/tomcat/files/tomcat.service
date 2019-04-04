@@ -1,0 +1,21 @@
+[Unit]
+Description=Apache Tom
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+Environment=CATALINA_PID=/opt/tom/apache-tomcat-8.5.39/temp/tomcat.pid
+Environment=CATALINA_HOME=/opt/tom/apache-tomcat-8.5.39
+Environment=CATALINA_BASE=/opt/tom/apache-tomcat-8.5.39
+
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses=true'
+ExecStart=/opt/tom/apache-tomcat-8.5.39/bin/startup.sh
+
+ExecStop=/opt/tom/apache-tomcat-8.5.39/bin/shutdown.sh
+
+user=jenkins
+group=jenkins
+[Install]
+WantedBy=multi-user.target

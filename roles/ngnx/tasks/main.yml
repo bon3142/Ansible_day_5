@@ -1,0 +1,9 @@
+---
+# tasks file for ngnx
+- name: install nginx
+  package: name=nginx
+  become: yes
+
+- name: start nginx
+  systemd: name=nginx state=started
+  become: yes  

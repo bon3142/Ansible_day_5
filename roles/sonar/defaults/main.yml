@@ -1,0 +1,6 @@
+---
+# defaults file for sonar
+sonar_groupe_name_default: sonar
+sonar_user_name_default: sonar
+sonar_uid_default: 7700
+sonar_gid_default: 7700

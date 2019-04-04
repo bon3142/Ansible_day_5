@@ -1,0 +1,11 @@
+---
+# tasks file for nginx-config
+- name: config
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+  become: yes
+  
+- name: restart
+  systemd: name=nginx state=restarted
+  become: yes    

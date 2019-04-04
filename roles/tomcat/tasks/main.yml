@@ -1,0 +1,63 @@
+---
+# tasks file for tomcat
+- name: new groupe
+  group:
+    name: jenkins
+    state: present
+  
+
+- name: new users creation jenkins
+  user:
+    name: jenkins
+    password: "{{ 'jenkins' | password_hash('sha512') }}"
+    
+      
+- name: create folder
+  file:
+    path: /opt/tom
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: 0775
+
+- name: install 
+  get_url:
+    url: http://ftp.byfly.by/pub/apache.org/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz
+    dest: /opt/tom
+    owner: jenkins
+    group: jenkins
+- name: extract 
+  unarchive:
+    remote_src: yes
+    src: /opt/tom/apache-tomcat-8.5.39.tar.gz
+    dest: /opt/tom
+    owner: jenkins
+    group: jenkins
+- file:
+    path: /
+- name: copy systemd
+  copy:
+    src: tomcat.service
+    dest: /usr/lib/systemd/system/tomcat.service
+  become: yes
+- name: copy manager-script
+  copy:
+    src: tomcat-users.xml
+    dest: /opt/tom/apache-tomcat-8.5.39/conf
+    owner: jenkins
+    group: jenkins
+
+- name: create webapps backup
+  file:
+    path: /opt/tom/apache-tomcat-8.5.39/OLDwebapps
+    state: directory
+    owner: jenkins
+    group: jenkins
+  become: yes
+- name: start tomcat
+  systemd:
+    name: tomcat
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  become: yes

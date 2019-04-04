@@ -1,0 +1,7 @@
+---
+# tasks file for java
+- name: install java
+  become: yes
+  yum:
+    name: java
+    state: latest

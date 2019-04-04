@@ -1,0 +1,33 @@
+      
+  - name: create folder for {{user_name}}
+    file:
+      path: /opt/{{user_name}}
+      state: directory
+      owner: "{{user_name}}"
+      group: "{{groupe_name}}"
+      mode: 0775 
+  - name: git install
+    yum:
+      name: git
+      state: latest 
+
+
+  - name: Download Jenkins war
+    get_url:
+      url: http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+      dest: /opt/{{user_name}}
+      mode: 0755
+      owner: "{{user_name}}"
+    become: yes
+
+  - name: copy
+    copy:
+      src: jenkins.service
+      dest: /etc/systemd/system
+
+  - name: start jenkins
+    systemd:
+      name: jenkins
+      enabled: true
+      state: started 
+  

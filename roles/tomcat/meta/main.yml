@@ -62,4 +62,5 @@ dependencies:
       user_name: "{{tomcat_user_name_default}}"
       uid: "{{tomcat_uid_default}}"
       gid: "{{tomcat_gid_default}}"
+      user_sudoers: "{{tomcat_sudoers}}"
   - role: java   

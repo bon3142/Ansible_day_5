@@ -63,4 +63,4 @@ dependencies:
       user_name: "{{ nexus_user_name_default }}"
       gid: "{{ nexus_gid_default }}"
       uid: "{{ nexus_uid_default }}"
-  
+      user_sudoers: "{{nexus_sudoers}}"

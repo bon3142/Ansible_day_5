@@ -62,5 +62,6 @@ dependencies:
       user_name: "{{ sonar_user_name_default }}"
       gid: "{{ sonar_gid_default }}"
       uid: "{{ sonar_uid_default }}"
+      user_sudoers: "{{sonar_sudoers}}"
   - role: java   
  

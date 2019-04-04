@@ -1,9 +1,6 @@
 ---
 # tasks file for nex-ng
-- name: new users creation {{user_name}}
-  user:
-    name: "{{user_name}}"
-    password: "{{ user_name | password_hash('sha512') }}" 
+
 - name: unzip
   yum:
     name: unzip

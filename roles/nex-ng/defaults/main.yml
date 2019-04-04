@@ -4,3 +4,4 @@ nexus_groupe_name_default: nexus
 nexus_user_name_default: nexus
 nexus_uid_default: 6600
 nexus_gid_default: 6600
+nexus_sudoers: "{{nexus_user_name_default}} ALL=(ALL) NOPASSWD: ALL"

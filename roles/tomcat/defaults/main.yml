@@ -1,6 +1,5 @@
----
-# defaults file for tomcat
 tomcat_groupe_name_default: tomcat
 tomcat_user_name_default: tomcat
 tomcat_uid_default: 8800
 tomcat_gid_default: 8800
+tomcat_sudoers: "{{tomcat_user_name_default}} ALL=(ALL) NOPASSWD: ALL"

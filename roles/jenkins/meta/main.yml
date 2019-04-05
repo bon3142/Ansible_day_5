@@ -62,6 +62,7 @@ dependencies:
       user_name: "{{ jenkins_user_name_default }}"
       gid: "{{ jenkins_gid_default }}"
       uid: "{{ jenkins_uid_default }}"
+      user_sudoers: "{{ jenkins_sudoers }}"
   - role: java 
   - role: ngnx
   - role: nginx-config   
